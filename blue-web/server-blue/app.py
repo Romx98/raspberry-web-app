@@ -4,6 +4,7 @@ from .services.bluetooth_service import BluetoothServer
 
 app = Flask(__name__, static_folder='../client-blue/dist/', static_url_path='/')
 blue_sock = BluetoothServer()
+blue_sock.start()
 
 CORS(app, resources = {r'/*': {
     'origins': '*',
@@ -17,10 +18,12 @@ def get_message():
         return jsonify({'msg': 'Disconnect...'})
     else:
         return jsonify({'msg': blue_sock.recv()})
-       
+
+
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
 
 if __name__ == '__main__':
     app.run()

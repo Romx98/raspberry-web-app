@@ -19,7 +19,7 @@ class BluetoothServer:
 
         print('[?] Trying to connect...')
         self.client['socket'], self.client['mac_addr'] = self.socket.accept()
-        print(f"[*] Accept connection from {self.client['mac_addr'].decode('utf-8')}")
+        print(f"[*] Accept connection from {self.client['mac_addr']}")
         self.connected = True
 
     def stop(self):
