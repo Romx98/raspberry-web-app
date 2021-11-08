@@ -25,11 +25,7 @@ class BluetoothServer:
     def stop(self):
         print("[-] Disconnected...")
         self.socket.close()
-        self.client_close
-    
-    def client_stop(self):
         try:
-            print("[-] Disconnected client...")
             self.client['socket'].close()
         except AttributeError:
             pass
@@ -40,10 +36,13 @@ class BluetoothServer:
             print(f"[+] Data from client: {data}")
             self.client['socket'].send('OK')
             return data
-        except bl.BluetoothError:
-            self.client_stop()
-            self.connected = False
-            self.start()
+        except bl.BluetoothError as be:
+            if "[Errno 104]" in be.arg[0]:
+                self.client_stop()
+                self.connected = False
+                self.start()
+            else:
+                return 'Disconnect'
 
     def is_connected(self):
         return self.connected;
