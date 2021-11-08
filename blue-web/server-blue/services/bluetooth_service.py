@@ -36,7 +36,7 @@ class BluetoothServer:
             print(f"[+] Data from client: {data}")
             self.client['socket'].send('OK')
             return data
-        except BluetoothError:
+        except bl.BluetoothError:
             self.stop()
             self.connected = False
             return "Unknown"
