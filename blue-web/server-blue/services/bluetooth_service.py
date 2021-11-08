@@ -1,5 +1,6 @@
 
 import bluetooth as bl
+import time
 
 class BluetoothServer:
 
@@ -37,12 +38,10 @@ class BluetoothServer:
             self.client['socket'].send('OK')
             return data
         except bl.BluetoothError as be:
-            if "[Errno 104]" in be.arg[0]:
-                self.client_stop()
-                self.connected = False
-                self.start()
-            else:
-                return 'Disconnect'
+            self.stop()
+            self.connected = False
+            time.sleep(0.5)
+            self.start()
 
     def is_connected(self):
         return self.connected;
