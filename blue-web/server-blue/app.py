@@ -14,10 +14,9 @@ CORS(app, resources = {r'/*': {
 
 @app.route('/message')
 def get_message():
-    if blue_sock.is_connected() == None or blue_sock.is_connected() == False:
-        return jsonify({'msg': 'Disconnect...'})
-    else:
+    if blue_sock.is_connected() == True:
         return jsonify({'msg': blue_sock.recv()})
+    return jsonify({'msg': 'Disconnect...'})
 
 
 @app.route('/')
