@@ -8,11 +8,11 @@ class BluetoothServer:
     PORT = 1
 
     def __init__(self):
-        self.socket = bl.BluetoothSocket(bl.RFCOMM)
         self.connected = None
         self.client = {}
 
     def start(self):
+        self.socket = bl.BluetoothSocket(bl.RFCOMM)
         self.socket.bind(('', self.PORT))
         self.socket.listen(self.BACKLOG)
         self.port = self.socket.getsockname()[1]
