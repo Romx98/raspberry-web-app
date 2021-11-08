@@ -42,6 +42,7 @@ class BluetoothServer:
             self.stop()
             self.connected = False
             self.start()
+            return("Waiting for data...")
 
     def is_connected(self):
         print(self.connected)

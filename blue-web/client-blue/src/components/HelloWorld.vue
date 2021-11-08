@@ -30,6 +30,7 @@ export default {
     }
   },
   created() {
+    this.msg = "Hallo";
     this.getMessage();
   }
 };
