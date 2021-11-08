@@ -44,4 +44,5 @@ class BluetoothServer:
             self.start()
 
     def is_connected(self):
+        print(self.connected)
         return self.connected
