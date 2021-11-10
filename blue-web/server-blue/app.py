@@ -18,6 +18,10 @@ blue_sock = BluetoothServer()
 def handle_message():
     emit('MESSAGE', {'data': blue_sock.recv()})
 
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
 
 if __name__ == '__main__':
     socketio.run(app, port=5000)
