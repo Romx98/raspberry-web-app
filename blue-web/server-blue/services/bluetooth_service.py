@@ -1,6 +1,5 @@
 
 import bluetooth as bl
-import time
 
 class BluetoothServer:
 
@@ -9,7 +8,6 @@ class BluetoothServer:
     PORT = 1
 
     def __init__(self):
-        self.connected = None
         self.client = {}
 
     def start(self):
@@ -41,9 +39,7 @@ class BluetoothServer:
         except bl.BluetoothError as be:
             self.stop()
             self.connected = False
+            return('Disconnect...')
+        except KeyError:
             self.start()
             return("Waiting for data...")
-
-    def is_connected(self):
-        print(self.connected)
-        return self.connected

@@ -11,7 +11,8 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      msg: 'Default value'
+      msg: 'Default value',
+      socket: io('localhost:5000')
     }
   },
   methods: {
@@ -23,14 +24,19 @@ export default {
         })
         .catch((err) => {
           console.error(err);
-        })
-        .finally(() => {
-          setTimeout(this.getMessage(), 1000);
         });
+    },
+    socketcall() {
+      this.socket.on((data) => {
+        this.getMessage()
+      })
     }
   },
   created() {
     this.getMessage();
+  },
+  mounted() {
+    this.socketcall();
   }
 };
 </script>
