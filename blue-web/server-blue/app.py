@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit
 from .services.bluetooth_service import BluetoothServer
 
 app = Flask(__name__, static_folder='../client-blue/dist/', static_url_path='/')
@@ -20,7 +20,7 @@ def index():
 
 @socketio.on('message')
 def handle_message():
-    emit('MSG', {'msg': blue_sock.recv()})
+    emit('MESSAGE', {'msg': blue_sock.recv()})
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>{{ this.msg }}</h1>
   </div>
 </template>
 
@@ -19,19 +19,11 @@ export default {
     }
   },
   methods: {
-    getMessage() {
-      const path = "/message";
-      axios.get(path)
-        .then((resp) => {
-          this.msg = resp;
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
+    
     socketcall() {
-      this.socket.on('MESSAGE', () => {
-        this.getMessage()
+      this.socket.on('MESSAGE', (socket) => {
+        this.msg = socket;
+        console.log(this.msg);
       })
     }
   },
