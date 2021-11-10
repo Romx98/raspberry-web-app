@@ -20,7 +20,7 @@ def index():
 
 @socketio.on('message')
 def handle_message():
-    emit(blue_sock.recv())
+    emit('MSG', {'msg': blue_sock.recv()})
 
 
 if __name__ == '__main__':

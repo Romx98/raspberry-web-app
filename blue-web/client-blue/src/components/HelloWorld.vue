@@ -13,7 +13,9 @@ export default {
   data() {
     return {
       msg: "Default value",
-      socket: io("localhost:5000")
+      socket: io("ws://localhost:5000", {
+        transports: ['websocket']
+      })
     }
   },
   methods: {
@@ -21,23 +23,23 @@ export default {
       const path = "/message";
       axios.get(path)
         .then((resp) => {
-          this.msg = resp.data.msg;
+          this.msg = resp;
         })
         .catch((err) => {
           console.error(err);
         });
     },
     socketcall() {
-      this.socket.on(() => {
+      this.socket.on('MESSAGE', (socket) => {
         this.getMessage()
       })
     }
   },
   created() {
-    this.getMessage()
+    this.getMessage();
   },
   mounted() {
-    this.socketcall()
+    this.socketcall();
   }
 };
 </script>
