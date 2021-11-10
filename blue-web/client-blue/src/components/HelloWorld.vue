@@ -6,13 +6,14 @@
 
 <script>
 import axios from "axios"
+import io from "socket.io-client"
 
 export default {
   name: "HelloWorld",
   data() {
     return {
-      msg: 'Default value',
-      socket: io('localhost:5000')
+      msg: "Default value",
+      socket: io("localhost:5000")
     }
   },
   methods: {
@@ -27,7 +28,7 @@ export default {
         });
     },
     socketcall() {
-      this.socket.on((data) => {
+      this.socket.on(() => {
         this.getMessage()
       })
     }
