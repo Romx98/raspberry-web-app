@@ -7,7 +7,7 @@ app = Flask(__name__, static_folder='../client-blue/dist/', static_url_path='/')
 
 
 CORS(app, resources = {r'/*': {
-    'origins': 'http://localhost:8080',
+    'origins': '*',
     'allow_headers': 'Access-Control-Allow-Origin'
 }})
 
@@ -23,4 +23,4 @@ def handle_message():
     emit('MESSAGE', {'data': blue_sock.recv()})
 
 if __name__ == '__main__':
-    socketio.run(app, port=5050)
+    socketio.run(app, port=5000)
