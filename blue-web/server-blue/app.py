@@ -8,7 +8,7 @@ socketio = SocketIO(app)
 blue_sock = BluetoothServer()
 
 CORS(app, resources = {r'/*': {
-    'origins': '*',
+    'origins': 'http://localhost:8080',
     'allow_headers': 'Access-Control-Allow-Origin'
 }})
 
@@ -24,4 +24,4 @@ def handle_message():
 
 
 if __name__ == '__main__':
-    socketio.run(app, port=2345)
+    socketio.run(app)

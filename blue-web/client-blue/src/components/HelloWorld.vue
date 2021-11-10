@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       msg: "Default value",
-      socket: io("http://localhost:2345")
+      socket: io("http://localhost:5000")
     }
   },
   methods: {
