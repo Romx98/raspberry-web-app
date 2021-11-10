@@ -4,6 +4,7 @@
 </template>
 
 <script>
+const io = require("socket.io-client");
 import HelloWorld from "./components/HelloWorld.vue";
 
 export default {
