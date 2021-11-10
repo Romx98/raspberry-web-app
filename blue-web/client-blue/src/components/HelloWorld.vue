@@ -30,14 +30,12 @@ export default {
         });
     },
     socketcall() {
-      this.socket.on('MESSAGE', (socket) => {
+      this.socket.on('MESSAGE', () => {
         this.getMessage()
       })
     }
   },
-  created() {
-    this.getMessage();
-  },
+ 
   mounted() {
     this.socketcall();
   }
