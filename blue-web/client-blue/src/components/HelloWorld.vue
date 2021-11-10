@@ -6,7 +6,7 @@
 
 <script>
 import SocketIO from "socket.io-client";
-const socketConnection = SocketIO("http://localhost:5000");
+const socketConnection = SocketIO("http://localhost:5050");
 
 export default {
   name: "HelloWorld",
@@ -16,7 +16,7 @@ export default {
     }
   },
   methods: {
-    
+
     socketcall() {
       socketConnection.on("MESSAGE", (socket) => {
         this.msg = socket.data;

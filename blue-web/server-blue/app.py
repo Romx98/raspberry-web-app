@@ -14,14 +14,13 @@ CORS(app, resources = {r'/*': {
 socketio = SocketIO(app, cors_allowed_origins='*')
 blue_sock = BluetoothServer()
 
-@socketio.on('connect')
-def handle_message():
-    emit('MESSAGE', {'data': blue_sock.recv()})
-
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
 
+@socketio.on('connect')
+def handle_message():
+    emit('MESSAGE', {'data': blue_sock.recv()})
 
 if __name__ == '__main__':
-    socketio.run(app, port=5000)
+    socketio.run(app, port=5050)
