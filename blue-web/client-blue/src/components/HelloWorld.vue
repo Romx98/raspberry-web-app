@@ -21,7 +21,7 @@ export default {
   methods: {
     
     socketcall() {
-      this.socket.on('MESSAGE', (socket) => {
+      this.socket.on("MESSAGE", (socket) => {
         this.msg = socket;
         console.log(this.msg);
       })
