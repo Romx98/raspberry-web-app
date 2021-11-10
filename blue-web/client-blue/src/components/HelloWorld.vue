@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       msg: "Default value",
-      socket: io("ws://localhost:5000", {
+      socket: io("ws://localhost:2345", {
         transports: ["websocket"]
       })
     }
