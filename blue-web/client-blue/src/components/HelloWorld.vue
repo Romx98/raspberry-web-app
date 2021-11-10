@@ -34,10 +34,10 @@ export default {
     }
   },
   created() {
-    this.getMessage();
+    this.getMessage()
   },
   mounted() {
-    this.socketcall();
+    this.socketcall()
   }
 };
 </script>
