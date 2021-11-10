@@ -14,7 +14,7 @@ export default {
     return {
       msg: "Default value",
       socket: io("ws://localhost:5000", {
-        transports: ['websocket']
+        transports: ["websocket"]
       })
     }
   },
