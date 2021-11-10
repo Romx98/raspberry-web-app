@@ -1,26 +1,25 @@
 <template>
   <div class="hello">
-    <h1>{{ this.msg }}</h1>
+    <h1>{{ msg }}</h1>
   </div>
 </template>
 
 <script>
-
-import io from "socket.io-client"
+import SocketIO from "socket.io-client";
+const socketConnection = SocketIO("http://localhost:5000");
 
 export default {
   name: "HelloWorld",
   data() {
     return {
-      msg: "Default value",
-      socket: io("http://localhost:5000")
+      msg: "Default value"
     }
   },
   methods: {
     
     socketcall() {
-      this.socket.on("MESSAGE", (socket) => {
-        this.msg = socket;
+      socketConnection.on("MESSAGE", (socket) => {
+        this.msg = socket.data;
         console.log(this.msg);
       })
     }
