@@ -43,7 +43,8 @@ class BluetoothServer:
             self.start()
             return("Waiting for data...")
         except KeyError:
-            return("Waiting for client...")
             self.start()
+            return("Waiting for client...")
+           
 
             
