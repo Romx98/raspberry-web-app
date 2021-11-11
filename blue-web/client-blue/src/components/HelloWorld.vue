@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1 v-if="isConnect">{{ msg }}</h1>
   </div>
 </template>
 
@@ -12,22 +12,30 @@ export default {
   name: "HelloWorld",
   data() {
     return {
+      isConnect: false,
       msg: "Default value"
     }
   },
   methods: {
 
-    socketcall() {
-      socketConnection.on("MESSAGE", (socket) => {
+    socketconnect() {
+      socketConnection.on("connect-data", (socket) => {
         this.msg = socket.data;
         console.log(this.msg);
-        this.$emit('Ping','ping');
+      })
+    },
+    socketlistener() {
+      socketConnection.on("blue-data", (socket) => {
+        this.msg = socket.data;
+        console.log(this.msg);
       })
     }
   },
- 
+  created() {
+    this.socketconnect();
+  },
   mounted() {
-    this.socketcall();
+    this.socketlistener();
   }
 };
 </script>
