@@ -23,4 +23,4 @@ def handle_message():
     emit('MESSAGE', {'data': blue_sock.recv()})
 
 if __name__ == '__main__':
-    socketio.run(app, port=5000)
+    socketio.run(app, host='192.168.137.111', port=8000)
