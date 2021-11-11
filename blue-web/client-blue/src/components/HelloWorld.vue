@@ -18,7 +18,7 @@ export default {
   methods: {
 
     socketcall() {
-      socketConnection.on("MESSAGE", (socket) => {
+      socketConnection.on("my event", (socket) => {
         this.msg = socket.data;
         console.log(this.msg);
       })

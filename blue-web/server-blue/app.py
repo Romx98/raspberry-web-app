@@ -18,9 +18,9 @@ blue_sock = BluetoothServer()
 def index():
     return app.send_static_file('index.html')
 
-@socketio.on('connect')
+@socketio.on('my event')
 def handle_message():
-    emit('MESSAGE', {'data': blue_sock.recv()})
+    emit('my event', {'data': blue_sock.recv()})
 
 if __name__ == '__main__':
     socketio.run(app, host='192.168.137.111', port=8000)
