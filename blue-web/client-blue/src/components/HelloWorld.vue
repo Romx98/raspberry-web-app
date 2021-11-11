@@ -21,6 +21,7 @@ export default {
       socketConnection.on("MESSAGE", (socket) => {
         this.msg = socket.data;
         console.log(this.msg);
+        this.$emit('Ping','ping');
       })
     }
   },
