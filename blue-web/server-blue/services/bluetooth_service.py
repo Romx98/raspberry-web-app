@@ -9,6 +9,7 @@ class BluetoothServer:
 
     def __init__(self):
         self.client = {}
+        self.connected = False
 
     def start(self):
         self.socket = bl.BluetoothSocket(bl.RFCOMM)
@@ -42,6 +43,6 @@ class BluetoothServer:
             self.start()
             return("Waiting for data...")
         except KeyError:
-            self.start()
             return("Waiting for client...")
+
             
