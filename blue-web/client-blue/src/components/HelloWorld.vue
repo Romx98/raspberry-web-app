@@ -23,7 +23,7 @@ export default {
       })
     },
     socketlistener() {
-      socketConnection.on("blue-data", (socket) => {
+      socketConnection.on("blue data", (socket) => {
         this.msg = socket.data;
         console.log(this.msg);
       })
