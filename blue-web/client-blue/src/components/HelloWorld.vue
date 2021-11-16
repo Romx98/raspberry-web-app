@@ -19,8 +19,7 @@ export default {
   methods: {
 
     socketconnect() {
-      socketConnection.on("connect", (socket) => {
-        this.msg = socket.data;
+      socketConnection.on("connect", () => {
         console.log(this.msg);
       })
     },
