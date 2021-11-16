@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1 v-if="isConnect">{{ msg }}</h1>
+    <h1>{{ msg }}</h1>
   </div>
 </template>
 
@@ -12,7 +12,6 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      isConnect: false,
       msg: "Default value"
     }
   },

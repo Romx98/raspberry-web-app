@@ -24,9 +24,11 @@ class BluetoothServer:
     DATA_SIZE = 1024
 
     def __init__(self):
+        print('[*] Initial socket')
         self.socket = bl.BluetoothSocket(bl.RFCOMM)
 
     def start(self):
+        print('[*] Start socket')
         self.socket.bind(('', self.PORT))
         self.socket.listen(self.BACKLOG)
         
