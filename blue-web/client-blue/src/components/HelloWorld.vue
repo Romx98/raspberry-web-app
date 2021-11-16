@@ -32,9 +32,6 @@ export default {
     }
   },
   created() {
-    this.socketconnect();
-  },
-  mounted() {
     this.socketlistener();
   }
 };

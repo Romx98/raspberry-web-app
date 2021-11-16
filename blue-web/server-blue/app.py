@@ -4,6 +4,18 @@ from flask_socketio import SocketIO, emit
 #from .services.bluetooth_service import BluetoothServer
 import bluetooth as bl
 
+app = Flask(__name__, static_folder='../client-blue/dist/', static_url_path='/')
+
+
+CORS(app, resources = {r'/*': {
+    'origins': '*',
+    'allow_headers': 'Access-Control-Allow-Origin'
+}})
+
+
+socketio = SocketIO(app, cors_allowed_origins='*')
+
+
 class BluetoothServer:
 
     SIZE = 1
@@ -47,16 +59,7 @@ class BluetoothServer:
                 break
 
 
-app = Flask(__name__, static_folder='../client-blue/dist/', static_url_path='/')
 
-
-CORS(app, resources = {r'/*': {
-    'origins': '*',
-    'allow_headers': 'Access-Control-Allow-Origin'
-}})
-
-
-socketio = SocketIO(app, cors_allowed_origins='*')
 blue_sock = BluetoothServer()
 blue_sock.start()
 
@@ -64,10 +67,6 @@ blue_sock.start()
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
-
-@socketio.on('connect')
-def handle_connect_data():
-    emit('connect-data', {'data': 'Waiting for client data...'})
 
 @socketio.on('bluetooth data')
 def handle_bluetooth_data():
