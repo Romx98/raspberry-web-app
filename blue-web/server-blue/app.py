@@ -40,7 +40,7 @@ class BluetoothServer:
                 data = client_socket.recv(self.DATA_SIZE).decode('utf-8')
                 print(f"[+] Data from client: {data}")
                 client_socket.send('OK')
-                emit('blue-data', {'data': data})
+                socketio.emit('blue-data', {'data': data})
             except bl.BluetoothError:
                 print("[-] Disconnected...")
                 break
@@ -57,8 +57,6 @@ class BluetoothServer:
             except Exception as e:
                 print(e)
                 break
-
-
 
 blue_sock = BluetoothServer()
 blue_sock.start()
