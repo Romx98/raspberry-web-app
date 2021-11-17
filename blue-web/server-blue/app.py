@@ -59,10 +59,10 @@ def index():
     return app.send_static_file('index.html')
 
 @socketio.on('my event')
-def handle_bluetooth_data():
+def handle_bluetooth_data(json):
     while True:
+        socketio.emit('blue data', {'data': 'Waiting for connection...'})
         if connected == False:
-            socketio.emit('blue data', {'data': 'Waiting for connection...'})
             accept_connection_and_send_data()
     
 

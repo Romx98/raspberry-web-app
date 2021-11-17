@@ -19,6 +19,7 @@ export default {
 
     socketconnect() {
       socketConnection.on("connect", () => {
+        socketConnection.emit('my event', {data: 'I\'m connected!'});
         console.log(this.msg);
       })
     }
