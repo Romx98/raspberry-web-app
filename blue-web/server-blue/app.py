@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 #from .services.bluetooth_service import BluetoothServer
@@ -33,7 +33,7 @@ def _recv_data(client_socket):
             data = client_socket.recv(64).decode('utf-8')
             connected = True
             print(f"[+] Data from client: {data}")
-            socketio.emit('blue data', {'data': data})
+            emit('blue data', {'data': data})
             client_socket.send('OK')
         except bl.BluetoothError:
             connected = False
@@ -62,7 +62,7 @@ def index():
 @socketio.on('my event')
 def handle_bluetooth_data(json):
     while True:
-        socketio.emit('blue data', {'data': 'Waiting for connection...'})
+        emit('blue data', {'data': 'Waiting for connection...'})
         if connected == False:
             accept_connection_and_send_data()
     

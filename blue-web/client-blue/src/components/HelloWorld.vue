@@ -16,8 +16,7 @@ export default {
     }
   },
   methods: {
-
-    socketconnect() {
+    sendConnect() {
       socketConnection.on('connect', () => {
         socketConnection.emit('my event', {data: 'I\'m connected!'});
         console.log('I\'m connected!');
@@ -25,7 +24,7 @@ export default {
     }
   },
   created() {
-    this.socketconnect();
+    this.sendConnect();
   },
   mounted() {
     socketConnection.on("blue data", (message) => {
