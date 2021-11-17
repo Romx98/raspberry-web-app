@@ -53,6 +53,7 @@ def accept_connection_and_send_data():
             print(e)
             break
     
+start_bluetooth(socket)
 
 @app.route('/')
 def index():

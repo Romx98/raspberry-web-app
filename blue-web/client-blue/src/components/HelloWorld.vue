@@ -18,9 +18,9 @@ export default {
   methods: {
 
     socketconnect() {
-      socketConnection.on("connect", () => {
+      socketConnection.on('connect', () => {
         socketConnection.emit('my event', {data: 'I\'m connected!'});
-        console.log(this.msg);
+        console.log('I\'m connected!');
       })
     }
   },
@@ -28,9 +28,9 @@ export default {
     this.socketconnect();
   },
   mounted() {
-    socketConnection.on("blue data", (socket) => {
-        this.msg = socket.data;
-        console.log(this.msg);
+    socketConnection.on("blue data", (message) => {
+        this.msg = message.data;
+        console.log(message);
       })
   }
 };
