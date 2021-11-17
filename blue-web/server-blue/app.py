@@ -59,9 +59,10 @@ def index():
 
 @socketio.on('bluetooth data')
 def handle_bluetooth_data():
-    accept_connection_and_send_data()
-    if connected == False:
-        socketio.emit('blue data', {'data': 'Waiting for connection...'})
+    while True:
+        accept_connection_and_send_data()
+        if connected == False:
+            socketio.emit('blue data', {'data': 'Waiting for connection...'})
     
 
 if __name__ == '__main__':
