@@ -1,3 +1,4 @@
+from datetime import time
 from flask import Flask
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
@@ -52,7 +53,7 @@ def accept_connection_and_send_data():
         except Exception as e:
             print(e)
             break
-    
+
 start_bluetooth(socket)
 
 @app.route('/')
@@ -62,10 +63,10 @@ def index():
 @socketio.on('my event')
 def handle_bluetooth_data(json):
     while True:
-        emit('blue data', {'data': 'Waiting for connection...'})
-        if connected == False:
-            accept_connection_and_send_data()
+        socketio.emit('blue data', {'data': 'Waiting for connection...'})
+        #if connected == False:
+        #    accept_connection_and_send_data()
     
 
 if __name__ == '__main__':
-    socketio.run(app, host='192.168.137.111', port=8000)
+    socketio.run(app, port=5000)
