@@ -42,6 +42,7 @@ def _recv_data(client_socket):
 
 
 def accept_connection_and_send_data():
+    print()
     while True:
         try:
             print('[?] Trying to connect...')
@@ -57,12 +58,12 @@ def accept_connection_and_send_data():
 def index():
     return app.send_static_file('index.html')
 
-@socketio.on('bluetooth data')
+@socketio.on('my event')
 def handle_bluetooth_data():
     while True:
-        accept_connection_and_send_data()
         if connected == False:
             socketio.emit('blue data', {'data': 'Waiting for connection...'})
+            accept_connection_and_send_data()
     
 
 if __name__ == '__main__':

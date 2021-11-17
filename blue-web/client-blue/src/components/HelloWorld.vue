@@ -21,19 +21,16 @@ export default {
       socketConnection.on("connect", () => {
         console.log(this.msg);
       })
-    },
-    socketlistener() {
-      socketConnection.on("blue data", (socket) => {
-        this.msg = socket.data;
-        console.log(this.msg);
-      })
     }
   },
   created() {
     this.socketconnect();
   },
   mounted() {
-    this.socketlistener();
+    socketConnection.on("blue data", (socket) => {
+        this.msg = socket.data;
+        console.log(this.msg);
+      })
   }
 };
 </script>
