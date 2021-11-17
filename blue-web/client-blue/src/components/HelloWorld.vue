@@ -6,7 +6,7 @@
 
 <script>
 import SocketIO from "socket.io-client";
-const socketConnection = SocketIO("http://localhost:5000");
+const socketConnection = SocketIO("http://192.168.137.111:5000");
 
 export default {
   name: "HelloWorld",

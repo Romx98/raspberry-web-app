@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "gunicorn -w 1 -b 192.168.137.111:8000 server-blue.app:app",
+    "serve": "gunicorn -w 1 -b :5000 server-blue.app:app",
     "build": "cd client-blue && npm run build",
     "lint": "vue-cli-service lint"
   },

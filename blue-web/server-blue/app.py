@@ -62,8 +62,8 @@ def index():
 
 @socketio.on('my event')
 def handle_bluetooth_data(json):
-    while True:
-        socketio.emit('blue data', {'data': 'Waiting for connection...'})
+    #while True:
+    socketio.emit('blue data', {'data': 'Waiting for connection...'})
         #if connected == False:
         #    accept_connection_and_send_data()
     
