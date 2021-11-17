@@ -15,8 +15,10 @@ CORS(app, resources = {r'/*': {
 
 socketio = SocketIO(app, cors_allowed_origins='*')
 socket = bl.BluetoothSocket(bl.RFCOMM)
+connected = False
 
 def start_bluetooth(socket):
+    print('[*] Initialize socket')
     socket.bind(('', 5))
     socket.listen(1)
 
@@ -25,13 +27,16 @@ def stop_blutooth(socket):
     socket.close()
 
 def _recv_data(client_socket):
+    global connected
     while True:
         try:
             data = client_socket.recv(64).decode('utf-8')
+            connected = True
             print(f"[+] Data from client: {data}")
             socketio.emit('blue data', {'data': data})
             client_socket.send('OK')
         except bl.BluetoothError:
+            connected = False
             print("[-] Disconnected...")
             break
 
@@ -42,7 +47,6 @@ def accept_connection_and_send_data():
             print('[?] Trying to connect...')
             client_socket, info_client = socket.accept()
             print(f"[*] Accept connection from {info_client}")
-
             _recv_data(client_socket)
         except Exception as e:
             print(e)
@@ -55,8 +59,10 @@ def index():
 
 @socketio.on('bluetooth data')
 def handle_bluetooth_data():
-    print()
     accept_connection_and_send_data()
+    if connected == False:
+        socketio.emit('blue data', {'data': 'Waiting for connection...'})
+    
 
 if __name__ == '__main__':
     socketio.run(app, host='192.168.137.111', port=8000)
