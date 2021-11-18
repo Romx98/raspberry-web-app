@@ -22,6 +22,10 @@ def start_bluetooth(socket):
     print('[*] Initialize socket')
     socket.bind(('', 5))
     socket.listen(1)
+    print('[?] Trying to connect...')
+    client_socket, info_client = socket.accept()
+    print(f"[*] Accept connection from {info_client}")
+    return client_socket
 
 def stop_blutooth(socket):
     print('[-] Disconnected Bluetooth Socket')
@@ -42,22 +46,18 @@ def _recv_data(client_socket):
             break
 
 
-def accept_connection_and_send_data():
-    print()
+def accept_connection_and_send_data(client):
     while True:
         try:
-            print('[?] Trying to connect...')
-            client_socket, info_client = socket.accept()
-            print(f"[*] Accept connection from {info_client}")
-            data = client_socket.recv(64).decode('utf-8')
+            data = client.recv(64).decode('utf-8')
             print(f"[+] Data from client: {data}")
             emit('blue data', {'data': data})
-            client_socket.send('OK')
+            client.send('OK')
         except Exception as e:
             print(e)
             break
 
-start_bluetooth(socket)
+client = start_bluetooth(socket)
 
 @app.route('/')
 def index():
@@ -66,7 +66,7 @@ def index():
 @socketio.on('my event')
 def handle_bluetooth_data(json):
     while True:
-        accept_connection_and_send_data()
+        accept_connection_and_send_data(client)
     
 
 if __name__ == '__main__':
