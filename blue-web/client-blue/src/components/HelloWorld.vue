@@ -12,7 +12,7 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      msg: "Default value"
+      msg: "Waiting for server connection!"
     }
   },
   methods: {
@@ -20,6 +20,12 @@ export default {
       socketConnection.on('connect', () => {
         socketConnection.emit('my event', {data: 'I\'m connected!'});
         console.log('I\'m connected!');
+      })
+    },
+    closeConnect() {
+      socketConnection.on('disconnect', () => {
+        socketConnection.emit('my event', {data: 'I\'m disconnected!'});
+        console.log('I\'m disconnected!');
       })
     }
   },
