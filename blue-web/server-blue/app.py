@@ -49,7 +49,10 @@ def accept_connection_and_send_data():
             print('[?] Trying to connect...')
             client_socket, info_client = socket.accept()
             print(f"[*] Accept connection from {info_client}")
-            _recv_data(client_socket)
+            data = client_socket.recv(64).decode('utf-8')
+            print(f"[+] Data from client: {data}")
+            emit('blue data', {'data': data})
+            client_socket.send('OK')
         except Exception as e:
             print(e)
             break
@@ -62,10 +65,8 @@ def index():
 
 @socketio.on('my event')
 def handle_bluetooth_data(json):
-    #while True:
-    socketio.emit('blue data', {'data': 'Waiting for connection...'})
-        #if connected == False:
-        #    accept_connection_and_send_data()
+    while True:
+        accept_connection_and_send_data()
     
 
 if __name__ == '__main__':
