@@ -64,6 +64,7 @@ class BluetoothServer:
                 print('[~] Bey bey!')
                 break
             except Exception:
+                self.stop()
                 self.start()
                 self.connection = False
                 break
