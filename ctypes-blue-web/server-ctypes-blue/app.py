@@ -103,7 +103,7 @@ def index():
 def handle_connect(msg):
     print('[*] User is connected!')
 
-@socketio.on('ctypes-data')
+@socketio.on('response-data')
 def handle_ctype_data(msg):
     if socketbl.is_connected() == False:
         print('[*] Socket start...')
