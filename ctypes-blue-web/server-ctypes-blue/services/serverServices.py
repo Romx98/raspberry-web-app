@@ -92,6 +92,7 @@ class BluetoothServer:
                 socket_client.send(ConstantString.SUCCESS_RECV)
             except bl.btcommon.BluetoothError:
                 self.client_close(socket_client)
+                self.server_utils.emit_to_client(ConstantString.CLIENT_DISCONNECTED)
                 break
 
     def accept_connection_and_emit(self):

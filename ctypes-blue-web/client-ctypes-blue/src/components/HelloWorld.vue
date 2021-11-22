@@ -27,7 +27,7 @@ export default {
       socketIO.on('blue-data', (resp) => {
         this.original_msg = resp.original;
         this.mutable_msg = resp.mutable;
-        console.log(resp.mutable);
+        console.log(resp);
       })
     }
   },

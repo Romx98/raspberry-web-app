@@ -34,9 +34,9 @@ def handle_disconnect():
 def handle_bluetooth_data(json):
     if socket_bl.is_connected() == False:
         print('[*] Socket start...')
-        socket_bl.start_socket_bl()
-    socket_bl.accept_connection_and_send_data()
+        socket_bl.start_socket()
+    socket_bl.accept_connection_and_emit()
 
 if __name__ == '__main__':
     host = '192.168.137.111'
-    socket_io.run(app, port=5000)
+    socket_io.run(app, host=host, port=5000)
