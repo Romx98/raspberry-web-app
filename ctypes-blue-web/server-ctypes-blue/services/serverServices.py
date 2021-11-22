@@ -1,6 +1,6 @@
-
 import bluetooth as bl
-
+import ctypes
+import os
 
 # Class contains only STRINGS
 class ConstantString:
@@ -16,20 +16,36 @@ class ConstantString:
 # Class contains helpfull methods
 class ServerUtils:
 
+    def __init__(self, socket_io):
+        self.socket_io = socket_io
+        self.lib_c = self.create_lib_c()
+
+    def create_lib_c(self):
+        try:
+            libname = os.path.abspath('./services/c/StringFunction.so')
+            print(libname)
+            return ctypes.CDLL(libname)
+        except FileNotFoundError as e:
+            print('[!] File not found!', e)
+
     def _generate_json(self, original, mutable):
         return {
             'original': original,
             'mutable': mutable
         }
 
-    def _add_one_to_char(self):
-        return ''
+    def _add_one_to_char(self, original_string):
+        mutable_string = ctypes.create_string_buffer(str.encode(original_string))
+        self.lib_c.add_one_to_string(mutable_string)
+        print(f'[*] Mutable string: \'{mutable_string.value}')
+        return mutable_string.value.decode('utf-8')
 
-    def emit_to_client(self, socket_io, original):
-        mutable = self._add_one_to_char()
+    def emit_to_client(self, original):
+        print('----------- ', original)
+        mutable = self._add_one_to_char(original)
         json_data = self._generate_json(original, mutable)
-        socket_io.emit(ConstantString.SOCKET_EVENT_NAME, json_data)
-        socket_io.sleep(1)
+        self.socket_io.emit(ConstantString.SOCKET_EVENT_NAME, json_data)
+        self.socket_io.sleep(1)
 
 
 # Class contians only Bluetooth Socket
@@ -40,8 +56,8 @@ class BluetoothServer:
     PORT = 1
     DATA_SIZE = 1024
 
-    def __init__(self, socket_io):
-        self.socket_io = socket_io
+    def __init__(self, server_utils):
+        self.server_utils = server_utils
         self.socket_bl = None
         self.connection = False
 
@@ -72,7 +88,7 @@ class BluetoothServer:
             try:
                 blue_data = socket_client.recv(self.DATA_SIZE).decode('utf-8')
                 print(f"[+] Data from client: {blue_data}")
-                ServerUtils.emit_to_client(self.socket_io, blue_data)
+                self.server_utils.emit_to_client(blue_data)
                 socket_client.send(ConstantString.SUCCESS_RECV)
             except bl.BluetoothError:
                 self.client_close(socket_client)
@@ -83,7 +99,7 @@ class BluetoothServer:
             try:
                 print('[?] Trying to connect...')
                 socket_client, info_client = self.socket_bl.accept()
-                ServerUtils.emit_to_client(self.socket_io, ConstantString.CLIENT_CONNECTED)
+                self.server_utils.emit_to_client(ConstantString.CLIENT_CONNECTED)
                 print(f"[*] Accept connection from {info_client}")
                 self.connection = True
                 self._recv_from_client(socket_client)
