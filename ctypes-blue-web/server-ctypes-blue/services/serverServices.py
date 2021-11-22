@@ -38,7 +38,7 @@ class ServerUtils:
         mutable_string = ctypes.create_string_buffer(str.encode(original_string))
         self.lib_c.add_one_to_string(mutable_string)
         print(f'[*] Mutable string: \'{mutable_string.value}')
-        return mutable_string.value.decode('UTF-16')
+        return mutable_string.value.decode('utf-8')
 
     def emit_to_client(self, original):
         mutable = self._add_one_to_char(original)
@@ -88,7 +88,7 @@ class BluetoothServer:
     def _recv_from_client(self, socket_client):
         while True:
             try:
-                blue_data = socket_client.recv(self.DATA_SIZE).decode('UTF16')
+                blue_data = socket_client.recv(self.DATA_SIZE).decode('utf-8')
                 print(f"[+] Data from client: {blue_data}")
                 self.server_utils.emit_to_client(blue_data)
                 socket_client.send(ConstantString.SUCCESS_RECV)
