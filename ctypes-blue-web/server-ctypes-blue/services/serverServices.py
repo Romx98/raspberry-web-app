@@ -107,8 +107,9 @@ class BluetoothServer:
                 break
             except Exception as e:
                 print(f'[!!] Can\'t accept connection! {e}')
-                self.stop_socket()
+                self.stop_socket(socket_client)
                 break
+
 
     def is_connected(self):
         return self.connection

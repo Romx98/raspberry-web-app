@@ -20,7 +20,6 @@ export default {
   methods: {
     connectionMsg() {
       socketIO.on('connect', () => {
-        socketIO.emit('response-data', {data: 'Hello server!'});
         console.log('Connected to the server!');
       })
     },
