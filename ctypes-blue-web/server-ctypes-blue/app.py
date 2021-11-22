@@ -55,7 +55,7 @@ class BluetoothServer:
                 if len(original_string) == 0:
                     break
                 print(f"[+] Data from client: {original_string}")
-                
+
                 mutable_string = ctypes_data(original_string)
                 json_data = {
                     'original': original_string,
@@ -112,4 +112,4 @@ def handle_ctype_data(msg):
 
 if __name__ == '__main__':
     app.debug = True
-    socketio.run(app, port=5000)
+    socketio.run(app, host='192.168.137.111', port=5000)
