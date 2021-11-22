@@ -41,7 +41,6 @@ class ServerUtils:
         return mutable_string.value.decode('utf-8')
 
     def emit_to_client(self, original):
-        print('----------- ', original)
         mutable = self._add_one_to_char(original)
         json_data = self._generate_json(original, mutable)
         self.socket_io.emit(ConstantString.SOCKET_EVENT_NAME, json_data)
