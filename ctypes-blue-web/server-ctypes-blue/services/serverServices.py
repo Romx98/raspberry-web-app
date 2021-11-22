@@ -60,16 +60,18 @@ class BluetoothServer:
         self.socket_bl = None
         self.connection = False
 
-    def start_socket_bl(self):
+    def start_socket(self):
         print('[~] Initialization bluetooth socket')
         self.socket_bl = bl.BluetoothSocket(bl.RFCOMM)
         self.socket_bl.bind(('', self.PORT))
         self.socket_bl.listen(self.BACKLOG)
+        self.connection = True
 
     def stop_socket(self, client_socket):
         try:
             self.client_close(client_socket)
             self.socket_bl.close()
+            self.connection = False
             print('[-] Disconnected Bluetooth Socket')
         except Exception as e:
             print(f'[!!] Can\'t closed! {e}')
@@ -77,7 +79,6 @@ class BluetoothServer:
     def client_close(self, client_socket):
         try:
             client_socket.close()
-            self.connection = False
             print("[-] Disconnected client...")
         except Exception as e:
             print(f'[!!] Can\'t disconnected \'client\'! {e}')
@@ -89,7 +90,7 @@ class BluetoothServer:
                 print(f"[+] Data from client: {blue_data}")
                 self.server_utils.emit_to_client(blue_data)
                 socket_client.send(ConstantString.SUCCESS_RECV)
-            except bl.BluetoothError:
+            except bl.btcommon.BluetoothError:
                 self.client_close(socket_client)
                 break
 
@@ -100,13 +101,13 @@ class BluetoothServer:
                 socket_client, info_client = self.socket_bl.accept()
                 self.server_utils.emit_to_client(ConstantString.CLIENT_CONNECTED)
                 print(f"[*] Accept connection from {info_client}")
-                self.connection = True
                 self._recv_from_client(socket_client)
             except KeyboardInterrupt:
                 print('[~] Goodbye!')
                 break
             except Exception as e:
                 print(f'[!!] Can\'t accept connection! {e}')
+                self.stop_socket()
                 break
 
     def is_connected(self):
