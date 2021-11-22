@@ -38,4 +38,5 @@ def handle_bluetooth_data(json):
     socket_bl.accept_connection_and_send_data()
 
 if __name__ == '__main__':
-    socket_io.run(app, port=5000)
+    host = '192.168.137.111'
+    socket_io.run(app, host=host, port=5000)
