@@ -35,7 +35,7 @@ def handle_bluetooth_data(json):
     if socket_bl.is_connected() == False:
         print('[*] Socket start...')
         socket_bl.start_socket_bl()
-    socket_bl.accept_connection_and_send_data()
+    socket_bl.accept_connection_and_emit()
 
 if __name__ == '__main__':
     host = '192.168.137.111'
