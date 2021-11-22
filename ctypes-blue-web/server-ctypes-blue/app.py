@@ -27,7 +27,6 @@ def handle_connect():
 
 @socket_io.on('disconnect')
 def handle_disconnect():
-    socket_bl.stop_socket()
     server_utils.emit_to_client(ConstantString.SERVER_CLOSED)
 
 @socket_io.on('response-data')
