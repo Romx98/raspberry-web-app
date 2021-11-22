@@ -38,7 +38,7 @@ class ServerUtils:
         mutable_string = ctypes.create_string_buffer(str.encode(original_string))
         self.lib_c.add_one_to_string(mutable_string)
         print(f'[*] Mutable string: \'{mutable_string.value}')
-        return mutable_string.value.decode('utf-8')
+        return mutable_string.value.decode('UTF-16')
 
     def emit_to_client(self, original):
         mutable = self._add_one_to_char(original)
@@ -71,6 +71,7 @@ class BluetoothServer:
         try:
             self.client_close(client_socket)
             self.socket_bl.close()
+            self.server_utils.emit_to_client(ConstantString.SERVER_CLOSED)
             self.connection = False
             print('[-] Disconnected Bluetooth Socket')
         except Exception as e:
@@ -79,6 +80,7 @@ class BluetoothServer:
     def client_close(self, client_socket):
         try:
             client_socket.close()
+            self.server_utils.emit_to_client(ConstantString.CLIENT_DISCONNECTED)
             print("[-] Disconnected client...")
         except Exception as e:
             print(f'[!!] Can\'t disconnected \'client\'! {e}')
@@ -86,13 +88,12 @@ class BluetoothServer:
     def _recv_from_client(self, socket_client):
         while True:
             try:
-                blue_data = socket_client.recv(self.DATA_SIZE).decode('utf-8')
+                blue_data = socket_client.recv(self.DATA_SIZE).decode('UTF16')
                 print(f"[+] Data from client: {blue_data}")
                 self.server_utils.emit_to_client(blue_data)
                 socket_client.send(ConstantString.SUCCESS_RECV)
             except bl.btcommon.BluetoothError:
                 self.client_close(socket_client)
-                self.server_utils.emit_to_client(ConstantString.CLIENT_DISCONNECTED)
                 break
 
     def accept_connection_and_emit(self):
